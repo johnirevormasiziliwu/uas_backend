@@ -5,6 +5,7 @@
  */
 package ukrim.co.id.serversideukrim.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,6 +36,7 @@ public class Region {
   @Column(nullable = false, name = "region_name")
   private String name;
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   @OneToMany(mappedBy = "region")
   private List<Country> countries;
 }

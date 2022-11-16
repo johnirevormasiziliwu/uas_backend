@@ -20,40 +20,43 @@ import ukrim.co.id.serversideukrim.repository.RegionRepository;
  */
 @Service
 public class RegionService {
-    
+
     private RegionRepository regionRepository;
 
     @Autowired
     public RegionService(RegionRepository regionRepository) {
         this.regionRepository = regionRepository;
     }
-    
-    public List<Region> getAll(){
+
+    public List<Region> getAll() {
         return regionRepository.findAll();
     }
-    
-    public Region getById(Long id){
+
+    public Region getById(Long id) {
         return regionRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Region not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Region not found"));
     }
-    
-    public Region create(Region region){
+
+    public Region create(Region region) {
         if (region.getId() != null) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Region already exists");
         }
+        if (regionRepository.findByName(region.getName()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Region name already exists");
+        }
         return regionRepository.save(region);
     }
-            
-    public Region update(Long id, Region region){
+
+    public Region update(Long id, Region region) {
         getById(id);
         region.setId(id);
         return regionRepository.save(region);
     }
-    
-    public Region delete(Long id){
+
+    public Region delete(Long id) {
         Region region = getById(id);
         regionRepository.delete(region);
         return region;
     }
-    
+
 }

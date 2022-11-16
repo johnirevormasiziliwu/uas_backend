@@ -1,6 +1,7 @@
 package ukrim.co.id.serversideukrim.model;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -38,7 +39,7 @@ public class User {
   @JoinColumn(name = "id")
   private Employee employee;
 
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
     name = "tb_user_role",
     joinColumns = @JoinColumn(name = "user_id"),
