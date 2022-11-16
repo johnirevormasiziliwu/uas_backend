@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ukrim.co.id.serversideukrim.model;
 
 import java.util.List;
@@ -11,30 +6,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- *
- * @author MSI-JO
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_region")
-public class Region {
+@Table(name = "tb_role")
+public class Role {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, name = "region_name")
+  @Column(length = 10, nullable = false)
   private String name;
 
-  @OneToMany(mappedBy = "region")
-  private List<Country> countries;
+  @ManyToMany(mappedBy = "roles")
+  private List<User> users;
 }
