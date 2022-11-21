@@ -1,5 +1,6 @@
 package ukrim.co.id.serversideukrim.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_user")
-public class User {
+public class User { // Account
 
   @Id
   private Long id;
@@ -34,6 +35,7 @@ public class User {
   private Boolean isEnabled = false;
   private Boolean isAccountLocked = false;
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   @OneToOne
   @MapsId
   @JoinColumn(name = "id")
