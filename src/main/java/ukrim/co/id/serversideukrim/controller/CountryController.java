@@ -2,6 +2,8 @@ package ukrim.co.id.serversideukrim.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,42 +19,40 @@ import ukrim.co.id.serversideukrim.service.CountryService;
 @RequestMapping("/country")
 public class CountryController {
 
-  private CountryService countryService;
+    private CountryService countryService;
 
-  @Autowired
-  public CountryController(CountryService countryService) {
-    this.countryService = countryService;
-  }
+    @Autowired
+    public CountryController(CountryService countryService) {
+        this.countryService = countryService;
+    }
 
-  // http://localhost:8088/country
-  @GetMapping
-  public List<Country> getAll() {
-    return countryService.getAll();
-  }
+    // http://localhost:8088/country
+    @GetMapping
+    public List<Country> getAll() {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities()                );
+        return countryService.getAll();
+    }
 
-  @GetMapping("/{id}")
-  public Country getById(@PathVariable Long id) {
-    return countryService.getById(id);
-  }
+    @GetMapping("/{id}")
+    public Country getById(@PathVariable Long id) {
+        return countryService.getById(id);
+    }
 
   // http://localhost:8088/region/1   (PathVariable) Detail
-
-  @PostMapping
-  public Country create(@RequestBody Country country) {
-    return countryService.create(country);
-  }
+    @PostMapping
+    public Country create(@RequestBody Country country) {
+        return countryService.create(country);
+    }
 
   // http://localhost:8088/country
-
-  @PutMapping("/{id}")
-  public Country update(@PathVariable Long id, @RequestBody Country country) {
-    return countryService.update(id, country);
-  }
+    @PutMapping("/{id}")
+    public Country update(@PathVariable Long id, @RequestBody Country country) {
+        return countryService.update(id, country);
+    }
 
   // http://localhost:8088/country/1
-
-  @DeleteMapping("/{id}")
-  public Country delete(@PathVariable Long id) {
-    return countryService.delete(id);
-  }
+    @DeleteMapping("/{id}")
+    public Country delete(@PathVariable Long id) {
+        return countryService.delete(id);
+    }
 }

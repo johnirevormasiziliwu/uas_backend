@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ukrim.co.id.serversideukrim.model.Employee;
@@ -25,6 +26,7 @@ public class EmployeeService  {
     
     private EmployeeRepository employeeRepository;
     private RoleService roleService;
+    private PasswordEncoder passwordEncoder;
     
     public List<Employee> getAll(){
         return employeeRepository.findAll();
@@ -42,6 +44,14 @@ public class EmployeeService  {
         List<Role> roles = new ArrayList<>();
         roles.add(roleService.getById(1L));
         employee.getUser().setRoles(roles);
+        
+        // Set IsEnabled, IsAccountLocked
+        employee.getUser().setIsAccountLocked(true);
+        employee.getUser().setIsEnabled(Boolean.TRUE);
+        
+        // Set Password
+        String password = employee.getUser().getPassword();
+        employee.getUser().setPassword(passwordEncoder.encode(password));
         
         // Set Employee in User
         employee.getUser().setEmployee(employee);

@@ -5,6 +5,7 @@
  */
 package ukrim.co.id.serversideukrim.repository;
 
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ukrim.co.id.serversideukrim.model.User;
@@ -15,5 +16,6 @@ import ukrim.co.id.serversideukrim.model.User;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
-    
+    Optional<User> findByUsername(String username);
+    // SELECT * FROM USER WHERE USERNAME = ?
 }

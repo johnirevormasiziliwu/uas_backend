@@ -18,14 +18,13 @@ public class EmailService {
   private JavaMailSender mailSender;
 
   public EmailRequest simpleEmail(EmailRequest emailRequest) {
-    SimpleMailMessage message = new SimpleMailMessage();
-    message.setTo(emailRequest.getTo());
-    message.setSubject(emailRequest.getSubject());
-    message.setText(emailRequest.getBody());
-
-    mailSender.send(message);
-    System.out.println("Mail send...");
-    return emailRequest;
+   SimpleMailMessage message = new SimpleMailMessage();
+   message.setTo(emailRequest.getTo());
+   message.setSubject(emailRequest.getSubject());
+   message.setText(emailRequest.getBody());
+   
+   mailSender.send(message);
+   return emailRequest;
   }
 
   public EmailRequest sendMessageWithAttachment(EmailRequest emailRequest) {

@@ -7,6 +7,7 @@ package ukrim.co.id.serversideukrim.controller;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,20 +26,23 @@ import ukrim.co.id.serversideukrim.service.EmployeeService;
 @RestController
 @RequestMapping("/employee")
 @AllArgsConstructor
+@PreAuthorize("hasAnyRole('USER','ADMIN')")
 public class EmployeeController {
-    
+
     private EmployeeService employeeService;
-    
+
     @GetMapping
     public List<Employee> getAll() {
         return employeeService.getAll();
     }
 
+    @PreAuthorize("hasAuthority('READ_MANAGER')")
     @GetMapping("/{id}")
     public Employee getById(@PathVariable Long id) {
-      return employeeService.getById(id);
+        return employeeService.getById(id);
     }
 
+    @PreAuthorize("hasAuthority('CREATE_USER')")
     @PostMapping
     public Employee create(@RequestBody Employee employee) {
         return employeeService.create(employee);
@@ -46,12 +50,12 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     public Employee update(@PathVariable Long id, @RequestBody Employee employee) {
-       return employeeService.update(id, employee);
+        return employeeService.update(id, employee);
     }
 
     @DeleteMapping("/{id}")
     public Employee delete(@PathVariable Long id) {
-      return employeeService.delete(id);
+        return employeeService.delete(id);
     }
-    
+
 }
