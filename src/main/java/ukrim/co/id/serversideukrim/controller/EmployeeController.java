@@ -26,7 +26,7 @@ import ukrim.co.id.serversideukrim.service.EmployeeService;
 @RestController
 @RequestMapping("/employee")
 @AllArgsConstructor
-@PreAuthorize("hasAnyRole('USER','ADMIN')")
+// @PreAuthorize("hasAnyRole('USER','ADMIN')")
 public class EmployeeController {
 
     private EmployeeService employeeService;
